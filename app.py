@@ -21,12 +21,15 @@ st.write("Enter the details of the house to predict its price.")
 # -----------------------------
 # MODEL_PATH = "house_price_model1.pkl"
 
-if os.path.exists(MODEL_PATH):
-    with open("https://github.com/urvashi772/example/blob/main/house_price_model1.pkl", "rb") as f:
-        model = pickle.load(f)
-    st.success("✅ Model loaded successfully!")
-else:
-    st.error("❌ Model file not found! Please run model_train.py first.")
+
+with open("https://github.com/urvashi772/example/blob/main/house_price_model1.pkl", "rb") as f:
+     model = pickle.load(f)
+
+# if os.path.exists(MODEL_PATH):
+ 
+#     st.success("✅ Model loaded successfully!")
+# else:
+#     st.error("❌ Model file not found! Please run model_train.py first.")
 
 # -----------------------------
 # 3. User Input
@@ -47,5 +50,6 @@ if st.button("Predict Price"):
         st.success(f"💰 Predicted House Price: ${prediction:,.2f}")
     else:
         st.error("Cannot predict because model file is missing.")
+
 
 
