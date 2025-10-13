@@ -22,7 +22,7 @@ st.write("Enter the details of the house to predict its price.")
 MODEL_PATH = "house_price_model1.pkl"
 
 if os.path.exists(MODEL_PATH):
-    with open(MODEL_PATH, "rb") as f:
+    with open("house_price_model1.pkl", "rb") as f:
         model = pickle.load(f)
     st.success("✅ Model loaded successfully!")
 else:
@@ -47,3 +47,4 @@ if st.button("Predict Price"):
         st.success(f"💰 Predicted House Price: ${prediction:,.2f}")
     else:
         st.error("Cannot predict because model file is missing.")
+
