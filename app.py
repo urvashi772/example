@@ -19,17 +19,18 @@ st.write("Enter the details of the house to predict its price.")
 # -----------------------------
 # 2. Load Model
 # -----------------------------
-# MODEL_PATH = "house_price_model1.pkl"
+MODEL_PATH = "house_price_model1.pkl"
 
-
-with open("https://github.com/urvashi772/example/blob/main/house_price_model1.pkl", "rb") as f:
-     model = pickle.load(f)
-
-# if os.path.exists(MODEL_PATH):
- 
-#     st.success("✅ Model loaded successfully!")
-# else:
-#     st.error("❌ Model file not found! Please run model_train.py first.")
+try:
+    with open(MODEL_PATH, "rb") as f:
+        model = pickle.load(f)
+    st.success("✅ Model loaded successfully!")
+except FileNotFoundError:
+    st.error("❌ Model file not found! Make sure it's in the repo.")
+    st.stop()
+except Exception as e:
+    st.error(f"⚠️ Error loading model: {e}")
+    st.stop()
 
 # -----------------------------
 # 3. User Input
@@ -44,12 +45,6 @@ age = st.sidebar.number_input("Age of House (in years)", min_value=0, max_value=
 # 4. Prediction
 # -----------------------------
 if st.button("Predict Price"):
-    if os.path.exists(MODEL_PATH):
-        input_data = pd.DataFrame([[size, bedrooms, age]], columns=["size", "bedrooms", "age"])
-        prediction = model.predict(input_data)[0]
-        st.success(f"💰 Predicted House Price: ${prediction:,.2f}")
-    else:
-        st.error("Cannot predict because model file is missing.")
-
-
-
+    input_data = pd.DataFrame([[size, bedrooms, age]], columns=["size", "bedrooms", "age"])
+    prediction = model.predict(input_data)[0]
+    st.success(f"💰 Predicted House Price: ${prediction:,.2f}")
