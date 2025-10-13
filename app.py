@@ -5,9 +5,6 @@ import pickle
 import os
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
 
 # -----------------------------
 # 1. Page Configuration
@@ -53,4 +50,5 @@ if st.button("Predict Price"):
     input_data = pd.DataFrame([[size, bedrooms, age]], columns=["size", "bedrooms", "age"])
     prediction = model.predict(input_data)[0]
     st.success(f"💰 Predicted House Price: ${prediction:,.2f}")
+
 
