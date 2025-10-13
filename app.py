@@ -3,8 +3,6 @@ import streamlit as st
 import pandas as pd
 import pickle
 import os
-import pandas as pd
-import numpy as np
 
 # -----------------------------
 # 1. Page Configuration
@@ -30,6 +28,9 @@ try:
 except FileNotFoundError:
     st.error("❌ Model file not found! Make sure it's in the repo.")
     st.stop()
+except ModuleNotFoundError as e:
+    st.error(f"⚠️ Missing dependency: {e}. Please check your requirements.txt.")
+    st.stop()
 except Exception as e:
     st.error(f"⚠️ Error loading model: {e}")
     st.stop()
@@ -48,7 +49,8 @@ age = st.sidebar.number_input("Age of House (in years)", min_value=0, max_value=
 # -----------------------------
 if st.button("Predict Price"):
     input_data = pd.DataFrame([[size, bedrooms, age]], columns=["size", "bedrooms", "age"])
-    prediction = model.predict(input_data)[0]
-    st.success(f"💰 Predicted House Price: ${prediction:,.2f}")
-
-
+    try:
+        prediction = model.predict(input_data)[0]
+        st.success(f"💰 Predicted House Price: ${prediction:,.2f}")
+    except Exception as e:
+        st.error(f"⚠️ Prediction failed: {e}")
